@@ -1,502 +1,584 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raone Miranda | Segurança da Informação</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #1a252f;
-            --transition: all 0.3s ease;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: var(--light);
-            overflow-x: hidden;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
-            opacity: 0.1;
-            pointer-events: none;
-        }
-        
-        .container {
-            width: 85%;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        h1::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background-color: var(--accent);
-        }
-        
-        h2 {
-            color: var(--secondary);
-            border-bottom: 2px solid var(--secondary);
-            padding-bottom: 0.5rem;
-            margin-top: 2rem;
-            position: relative;
-        }
-        
-        h2::after {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-        }
-        
-        .contact-info a {
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .contact-info a:hover {
-            color: var(--accent);
-        }
-        
-        .section {
-            background: white;
-            padding: 2rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .skill {
-            background-color: var(--secondary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: var(--transition);
-            cursor: default;
-        }
-        
-        .skill:hover {
-            background-color: var(--accent);
-            transform: translateY(-3px);
-        }
-        
-        .education-item {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-            border-left: 2px solid var(--secondary);
-            position: relative;
-        }
-        
-        .education-item::before {
-            content: "";
-            position: absolute;
-            left: -8px;
-            top: 5px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--accent);
-        }
-        
-        .education-item h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-        
-        .education-item p {
-            margin: 0.2rem 0;
-        }
-        
-        .year {
-            font-weight: bold;
-            color: var(--accent);
-        }
-        
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: var(--transition);
-        }
-        
-        .theme-toggle:hover {
-            background: var(--accent);
-            transform: rotate(30deg);
-        }
-        
-        footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 1rem 0;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 1.5rem;
-            transition: var(--transition);
-        }
-        
-        .social-links a:hover {
-            color: var(--accent);
-            transform: translateY(-3px);
-        }
-        
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-        
-        body.dark-mode .section {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-        
-        body.dark-mode h2,
-        body.dark-mode .education-item h3 {
-            color: #bb86fc;
-        }
-        
-        body.dark-mode .skill {
-            background-color: #3700b3;
-        }
-        
-        body.dark-mode .skill:hover {
-            background-color: #03dac6;
-        }
-        
-        /* Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .floating-icon {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .contact-info {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            
-            .section {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raone Miranda | Pentester & Security Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00ff41;
+    --green-dim: #00c832;
+    --green-dark: #003b10;
+    --bg: #020b04;
+    --bg2: #040f06;
+    --card: #050d07;
+    --border: rgba(0,255,65,0.18);
+    --text: #b0ffb8;
+    --text-dim: #4a7a52;
+    --mono: 'Share Tech Mono', monospace;
+    --display: 'Orbitron', sans-serif;
+    --body: 'Rajdhani', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.6; overflow-x: hidden; cursor: crosshair; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.015) 2px, rgba(0,255,65,0.015) 4px); pointer-events: none; z-index: 9999; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 16px 48px; border-bottom: 1px solid var(--border); background: rgba(2,11,4,0.92); backdrop-filter: blur(8px); }
+  .nav-logo { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--green); letter-spacing: 3px; text-decoration: none; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { font-family: var(--mono); font-size: 10px; color: var(--text-dim); text-decoration: none; letter-spacing: 2px; transition: color 0.2s; }
+  .nav-links a::before { content: '> '; color: var(--green); opacity: 0; transition: opacity 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-links a:hover::before { opacity: 1; }
+
+  /* HERO */
+  #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 48px 80px; position: relative; overflow: hidden; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,255,65,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,65,0.04) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%); }
+  .hero-corner { position: absolute; font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 1px; }
+  .hero-corner.tl { top: 90px; left: 48px; }
+  .hero-corner.tr { top: 90px; right: 48px; text-align: right; }
+  .hero-corner.bl { bottom: 40px; left: 48px; }
+  .hero-corner.br { bottom: 40px; right: 48px; text-align: right; }
+  .hero-tag { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: 4px; margin-bottom: 20px; animation: fadeSlideUp 0.8s ease both; }
+  .hero-name { font-family: var(--display); font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.05; animation: fadeSlideUp 0.8s 0.15s ease both; }
+  .hero-name span { color: var(--green); text-shadow: 0 0 30px rgba(0,255,65,0.6); }
+  .hero-title { font-family: var(--mono); font-size: clamp(0.75rem, 1.4vw, 1rem); color: var(--text-dim); margin-top: 16px; animation: fadeSlideUp 0.8s 0.3s ease both; }
+  .hero-title .cursor { display: inline-block; width: 10px; height: 1.1em; background: var(--green); margin-left: 4px; vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+  .hero-desc { max-width: 600px; margin-top: 28px; color: var(--text); font-size: 15px; font-weight: 300; line-height: 1.8; animation: fadeSlideUp 0.8s 0.45s ease both; }
+  .hero-cta { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; animation: fadeSlideUp 0.8s 0.6s ease both; }
+
+  .btn { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; padding: 13px 26px; border: 1px solid var(--green); background: transparent; color: var(--green); text-decoration: none; cursor: pointer; position: relative; overflow: hidden; transition: color 0.3s; }
+  .btn::before { content: ''; position: absolute; inset: 0; background: var(--green); transform: translateX(-101%); transition: transform 0.3s ease; }
+  .btn:hover { color: var(--bg); }
+  .btn:hover::before { transform: translateX(0); }
+  .btn span { position: relative; z-index: 1; }
+  .btn-ghost { border-color: var(--border); color: var(--text-dim); }
+  .btn-ghost::before { background: var(--green-dark); }
+  .btn-ghost:hover { color: var(--green); }
+
+  /* LAYOUT */
+  section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+  .full-bg { background: var(--bg2); max-width: 100%; padding: 100px 0; }
+  .section-wrap { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .section-label { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: 4px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+  .section-label::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--green); opacity: 0.4; }
+  .section-title { font-family: var(--display); font-size: clamp(1.5rem, 2.8vw, 2.4rem); font-weight: 700; color: #fff; margin-bottom: 40px; letter-spacing: 1px; }
+
+  /* SOBRE */
+  .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 56px; align-items: start; }
+  .about-text p { color: var(--text); font-size: 15px; font-weight: 300; line-height: 1.8; margin-bottom: 16px; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .stat-card { background: var(--card); border: 1px solid var(--border); padding: 24px; position: relative; transition: border-color 0.3s; }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--green); opacity: 0; transition: opacity 0.3s; }
+  .stat-card:hover { border-color: rgba(0,255,65,0.4); }
+  .stat-card:hover::before { opacity: 1; }
+  .stat-num { font-family: var(--display); font-size: 1.8rem; font-weight: 900; color: var(--green); line-height: 1; text-shadow: 0 0 20px rgba(0,255,65,0.4); }
+  .stat-label { font-family: var(--mono); font-size: 9px; color: var(--text-dim); letter-spacing: 2px; margin-top: 6px; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .skill-card { background: var(--card); border: 1px solid var(--border); padding: 32px; transition: transform 0.3s, border-color 0.3s; }
+  .skill-card:hover { transform: translateY(-4px); border-color: rgba(0,255,65,0.35); }
+  .skill-icon { font-family: var(--mono); font-size: 22px; color: var(--green); margin-bottom: 16px; display: block; }
+  .skill-name { font-family: var(--display); font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 2px; margin-bottom: 12px; }
+  .skill-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; font-weight: 300; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+  .tag { font-family: var(--mono); font-size: 9px; color: var(--green); background: rgba(0,255,65,0.07); border: 1px solid rgba(0,255,65,0.2); padding: 3px 9px; letter-spacing: 1px; }
+
+  /* FERRAMENTAS */
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 2px; }
+  .tool-item { background: var(--card); border: 1px solid var(--border); padding: 20px; text-align: center; transition: border-color 0.3s, background 0.3s; }
+  .tool-item:hover { background: var(--green-dark); border-color: rgba(0,255,65,0.4); }
+  .tool-name { font-family: var(--mono); font-size: 10px; color: var(--green); letter-spacing: 1px; margin-bottom: 5px; }
+  .tool-use { font-size: 11px; color: var(--text-dim); font-weight: 300; }
+  .tool-bar { height: 2px; background: rgba(0,255,65,0.1); margin-top: 12px; overflow: hidden; }
+  .tool-bar-fill { height: 100%; background: var(--green); }
+
+  /* PROJETOS */
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  .project-card { background: var(--card); border: 1px solid var(--border); padding: 32px; transition: border-color 0.3s, transform 0.3s; position: relative; overflow: hidden; }
+  .project-card:hover { border-color: rgba(0,255,65,0.4); transform: translateY(-3px); }
+  .project-card::after { content: ''; position: absolute; top: 0; right: 0; width: 0; height: 2px; background: var(--green); transition: width 0.4s ease; }
+  .project-card:hover::after { width: 100%; }
+  .project-num { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 14px; }
+  .project-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 1px; margin-bottom: 12px; }
+  .project-desc { font-size: 13px; color: var(--text-dim); line-height: 1.7; font-weight: 300; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+
+  /* EXPERIÊNCIA */
+  .exp-item { background: var(--card); border: 1px solid var(--border); padding: 36px; margin-bottom: 2px; transition: border-color 0.3s; position: relative; }
+  .exp-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--green); opacity: 0; transition: opacity 0.3s; }
+  .exp-item:hover { border-color: rgba(0,255,65,0.4); }
+  .exp-item:hover::before { opacity: 1; }
+  .exp-meta { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 10px; }
+  .exp-title { font-family: var(--display); font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 1px; margin-bottom: 4px; }
+  .exp-company { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: 1px; margin-bottom: 16px; }
+  .exp-list { list-style: none; }
+  .exp-list li { font-size: 13px; color: var(--text-dim); font-weight: 300; line-height: 1.6; padding: 4px 0 4px 18px; position: relative; }
+  .exp-list li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-family: var(--mono); }
+
+  /* FORMAÇÃO */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .edu-card { background: var(--card); border: 1px solid var(--border); padding: 32px; transition: border-color 0.3s; }
+  .edu-card:hover { border-color: rgba(0,255,65,0.4); }
+  .edu-meta { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 10px; }
+  .edu-title { font-family: var(--display); font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 1px; margin-bottom: 6px; }
+  .edu-inst { font-family: var(--mono); font-size: 11px; color: var(--green); }
+
+  /* CERTS */
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2px; }
+  .cert-item { background: var(--card); border: 1px solid var(--border); padding: 22px 24px; display: flex; align-items: center; gap: 14px; transition: border-color 0.3s, background 0.3s; }
+  .cert-item:hover { border-color: rgba(0,255,65,0.4); background: var(--green-dark); }
+  .cert-dot { width: 8px; height: 8px; background: var(--green); flex-shrink: 0; transform: rotate(45deg); }
+  .cert-dot.wip { background: transparent; border: 1px solid #ffcc00; }
+  .cert-text { font-family: var(--mono); font-size: 11px; color: var(--text); letter-spacing: 1px; }
+  .cert-source { font-size: 11px; color: var(--text-dim); font-weight: 300; margin-top: 3px; }
+  .cert-badge { font-family: var(--mono); font-size: 9px; padding: 2px 8px; border: 1px solid; margin-left: auto; flex-shrink: 0; }
+  .cert-badge.done { color: var(--green); border-color: rgba(0,255,65,0.3); }
+  .cert-badge.wip { color: #ffcc00; border-color: rgba(255,204,0,0.3); }
+
+  /* PLATAFORMAS */
+  .platforms { display: flex; flex-wrap: wrap; gap: 2px; margin-top: 32px; }
+  .platform-pill { font-family: var(--mono); font-size: 11px; color: var(--green); background: var(--card); border: 1px solid var(--border); padding: 12px 22px; letter-spacing: 2px; transition: border-color 0.3s, background 0.3s; }
+  .platform-pill:hover { border-color: var(--green); background: var(--green-dark); }
+
+  /* IDIOMAS */
+  .lang-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; max-width: 600px; }
+  .lang-card { background: var(--card); border: 1px solid var(--border); padding: 28px 32px; }
+  .lang-name { font-family: var(--display); font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 2px; margin-bottom: 6px; }
+  .lang-level { font-family: var(--mono); font-size: 11px; color: var(--green); letter-spacing: 1px; }
+
+  /* ROADMAP */
+  .roadmap { position: relative; padding-left: 32px; }
+  .roadmap::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--border); }
+  .roadmap-item { position: relative; margin-bottom: 44px; }
+  .roadmap-dot { position: absolute; left: -29px; top: 6px; width: 14px; height: 14px; border: 2px solid var(--green); background: var(--bg); transform: rotate(45deg); }
+  .roadmap-dot.active { background: var(--green); box-shadow: 0 0 16px rgba(0,255,65,0.6); animation: pulse 2s ease infinite; }
+  .roadmap-dot.future { border-color: var(--border); }
+  .roadmap-meta { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 8px; }
+  .roadmap-title { font-family: var(--display); font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
+  .roadmap-desc { font-size: 13px; color: var(--text-dim); font-weight: 300; line-height: 1.7; max-width: 620px; }
+  .roadmap-badge { display: inline-block; font-family: var(--mono); font-size: 9px; letter-spacing: 2px; padding: 3px 10px; margin-top: 12px; border: 1px solid; }
+  .roadmap-badge.em-curso { color: var(--green); border-color: var(--green); background: rgba(0,255,65,0.06); }
+  .roadmap-badge.planejado { color: var(--text-dim); border-color: var(--border); }
+
+  /* CONTATO */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px; }
+  .contact-card { background: var(--card); border: 1px solid var(--border); padding: 36px; display: flex; align-items: flex-start; gap: 20px; text-decoration: none; transition: border-color 0.3s, background 0.3s; color: inherit; }
+  .contact-card:hover { border-color: rgba(0,255,65,0.4); background: var(--green-dark); }
+  .contact-icon { font-family: var(--mono); font-size: 20px; color: var(--green); flex-shrink: 0; margin-top: 4px; }
+  .contact-label { font-family: var(--mono); font-size: 9px; color: var(--text-dim); letter-spacing: 3px; margin-bottom: 6px; }
+  .contact-value { font-family: var(--display); font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 1px; }
+
+  /* TERMINAL */
+  .terminal { background: #000; border: 1px solid var(--border); padding: 24px; font-family: var(--mono); font-size: 12px; }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 18px; align-items: center; }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-dot.r { background: #ff5f57; } .t-dot.y { background: #febc2e; } .t-dot.g { background: #28c840; }
+  .terminal-title { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; margin-left: 8px; }
+  .t-line { margin-bottom: 5px; color: var(--text-dim); }
+  .t-line .prompt { color: var(--green); }
+  .t-line .cmd { color: #fff; }
+  .t-line .ok { color: var(--green); }
+  .t-line .warn { color: #ffcc00; }
+  .t-cursor { display: inline-block; width: 8px; height: 13px; background: var(--green); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .footer-sig { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .footer-sig span { color: var(--green); }
+
+  @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 0 8px rgba(0,255,65,0.5); } 50% { box-shadow: 0 0 24px rgba(0,255,65,0.9); } }
+  @keyframes glitch { 0% { text-shadow: 2px 0 0 rgba(0,255,65,0.4), -2px 0 0 rgba(0,200,50,0.2); } 50% { text-shadow: -2px 2px 0 rgba(0,255,65,0.4), 2px -2px 0 rgba(0,200,50,0.2); } 100% { text-shadow: 2px 0 0 rgba(0,255,65,0.4), -2px 0 0 rgba(0,200,50,0.2); } }
+  .hero-name:hover { animation: glitch 0.3s ease infinite; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { gap: 12px; }
+    section, #hero { padding: 80px 20px; }
+    .about-grid, .contact-grid, .projects-grid, .edu-grid, .lang-grid, .skills-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .hero-corner { display: none; }
+    .section-wrap { padding: 0 20px; }
+    .skills-grid { padding: 0 20px; }
+  }
+</style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </button>
-    
-    <header>
-        <div class="container">
-            <h1>Raone Luiz Rodrigues Miranda</h1>
-            <div class="contact-info">
-                <a href="https://goo.gl/maps/example" target="_blank">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Casa Grande - MG | CEP: 36422-000</span>
-                </a>
-                <a href="tel:+5532998347089">
-                    <i class="fas fa-phone"></i>
-                    <span>(32) 99834-7089</span>
-                </a>
-                <a href="mailto:raoneluiz1404@gmail.com">
-                    <i class="fas fa-envelope"></i>
-                    <span>raoneluiz1404@gmail.com</span>
-                </a>
-            </div>
-        </div>
-    </header>
-    
-    <main class="container">
-        <section class="section" id="objective">
-            <h2><i class="fas fa-bullseye floating-icon"></i> Sobre mim</h2>
-            <p>"Aprendiz de Cybersecurity apaixonado por descobrir vulnerabilidades e proteger sistemas. Autodidata em Python, pentest básico e redes. Busco minha primeira oportunidade para aprender com profissionais e contribuir com meus conhecimentos técnicos."</p>
-        </section>
-        
-        <section class="section" id="education">
-            <h2><i class="fas fa-graduation-cap floating-icon"></i> Educação & Certificações</h2>
-            
-            <div class="education-item">
-                <h3>Segurança da Informação</h3>
-                <p><strong>FAM</strong> - <span class="year">2025</span></p>
-                <p>Graduação</p>
-            </div>
-            
-            <div class="education-item">
-                <h3>Técnico em Mecatrônica</h3>
-                <p><span class="year">2021</span></p>
-            </div>
-            
-            <div class="education-item">
-                <h3>Python</h3>
-                <p><strong>Curso em Vídeo</strong> - <span class="year">2020</span></p>
-            </div>
-            
-            <div class="education-item">
-                <h3>HTML, CSS e JavaScript</h3>
-                <p><strong>Udemy</strong> - <span class="year">2024</span></p>
-            </div>
-            
-            <div class="education-item">
-                <h3>Introdução ao Pentest 2.0</h3>
-                <p><strong>Solyd</strong> - <span class="year">2025</span></p>
-            </div>
-            
-            <div class="education-item">
-                <h3>Java Cloud Native</h3>
-                <p><strong>Dio</strong> - <span class="year">2025</span></p>
-            </div>
-            
-            <div class="education-item">
-                <h3>Defesa de Redes</h3>
-                <p><strong>Senac / Cisco Academy</strong> - <span class="year">2025</span></p>
-            </div>
-            
-            <div class="education-item">
-                <h3>Cibersegurança</h3>
-                <p><strong>Cisco Academy</strong> - <span class="year">2025</span></p>
-            </div>
-        </section>
-        
-        <section class="section" id="skills">
-            <h2><i class="fas fa-laptop-code floating-icon"></i> Habilidades</h2>
-            <div class="skills-container">
-                <span class="skill" data-level="85">Python</span>
-                <span class="skill" data-level="80">Linux</span>
-                <span class="skill" data-level="90">Windows</span>
-                <span class="skill" data-level="75">Kali Linux</span>
-                <span class="skill" data-level="85">Redes</span>
-                <span class="skill" data-level="70">C/C++</span>
-                <span class="skill" data-level="90">Boa comunicação</span>
-                <span class="skill" data-level="85">Gestão de tempo</span>
-                <span class="skill" data-level="90">Proatividade</span>
-                <span class="skill" data-level="100">Português</span>
-                <span class="skill" data-level="70">Inglês</span>
-                <span class="skill" data-level="80">GitHub</span>
-            </div>
-        </section>
-        
-        <section class="section" id="projects">
-            <h2><i class="fas fa-project-diagram floating-icon"></i> Projetos</h2>
-            <div id="projectsContainer">
-                <!-- Projetos serão carregados via JavaScript -->
-                <p class="loading">Carregando projetos...</p>
-            </div>
-        </section>
-    </main>
-    
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="https://github.com/DevRaone" target="_blank" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/raone-luiz-rodrigues-miranda-271a1128b/" target="_blank" title="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                </a>
-                <a href="mailto:raoneluiz1404@gmail.com" title="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
-            </div>
-            <p>&copy; 2025 Raone Luiz Rodrigues Miranda. Todos os direitos reservados.</p>
-        </div>
-    </footer>
 
-    <script>
-        // Tema Dark/Light
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const icon = themeToggle.querySelector('i');
-        
-        // Verificar preferência do usuário
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
-            icon.classList.replace('fa-moon', 'fa-sun');
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            
-            if (body.classList.contains('dark-mode')) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'light');
-            }
-        });
-        
-        // Animação de scroll para as seções
-        const sections = document.querySelectorAll('.section');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-        
-        // Tooltip para habilidades
-        const skills = document.querySelectorAll('.skill');
-        
-        skills.forEach(skill => {
-            const level = skill.getAttribute('data-level');
-            if (level) {
-                skill.setAttribute('title', `Nível: ${level}%`);
-            }
-        });
-        
-        // Carregar projetos (simulação)
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const projectsContainer = document.getElementById('projectsContainer');
-                projectsContainer.innerHTML = `
-                    <div class="education-item">
-                        <h3>Sistema de Detecção de Intrusão</h3>
-                        <p>Desenvolvimento de um sistema básico de detecção de intrusão usando Python e técnicas de análise de rede.</p>
-                        <p><span class="year">2024</span> | <strong>Tecnologias:</strong> Python, Linux, Wireshark</p>
-                    </div>
-                    <div class="education-item">
-                        <h3>Site Pessoal com HTML/CSS/JS</h3>
-                        <p>Criação de um site pessoal responsivo para demonstrar habilidades em desenvolvimento front-end.</p>
-                        <p><span class="year">2024</span> | <strong>Tecnologias:</strong> HTML5, CSS3, JavaScript</p>
-                    </div>
-                    <div class="education-item">
-                        <h3>Análise de Vulnerabilidades</h3>
-                        <p>Projeto acadêmico de análise de vulnerabilidades em sistemas web usando Kali Linux.</p>
-                        <p><span class="year">2025</span> | <strong>Tecnologias:</strong> Kali Linux, OWASP ZAP, Burp Suite</p>
-                    </div>
-                `;
-            }, 1000);
-        });
-        
-        // Efeito de digitação no título (opcional)
-        const title = document.querySelector('h1');
-        const originalText = title.textContent;
-        title.textContent = '';
-        
-        let i = 0;
-        const typingEffect = setInterval(() => {
-            if (i < originalText.length) {
-                title.textContent += originalText.charAt(i);
-                i++;
-            } else {
-                clearInterval(typingEffect);
-            }
-        }, 100);
-    </script>
+<nav>
+  <a href="#hero" class="nav-logo">R_MIRANDA</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">SOBRE</a></li>
+    <li><a href="#skills">SKILLS</a></li>
+    <li><a href="#projetos">PROJETOS</a></li>
+    <li><a href="#exp">EXPERIÊNCIA</a></li>
+    <li><a href="#formacao">FORMAÇÃO</a></li>
+    <li><a href="#contact">CONTATO</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-corner tl">// PORTFOLIO v1.0.0</div>
+  <div class="hero-corner tr">STATUS: ONLINE<br>SEC_LEVEL: AUTHORIZED</div>
+  <div class="hero-corner bl">KALI LINUX 2024 | /BIN/ZSH</div>
+  <div class="hero-corner br">FAM — SEG. DA INFORMAÇÃO<br>PREVISÃO: 2027</div>
+
+  <div class="hero-tag">// ANALISTA DE SEGURANÇA JR. | PENTEST | RED TEAM | OSINT</div>
+  <h1 class="hero-name">RAONE<br><span>MIRANDA</span></h1>
+  <p class="hero-title">Web Pentester | OSINT Analyst | Red Team Enthusiast | Python Dev<span class="cursor"></span></p>
+  <p class="hero-desc">
+    Profissional em formação na área de Segurança Ofensiva, com foco em Pentest de Aplicações Web, OSINT e simulações de Red Team. Experiência prática com Burp Suite, Nmap, Maltego e Python. Cursando Bacharelado em Segurança da Informação na FAM, buscando aplicar conhecimentos em avaliações de vulnerabilidade e hacking ético em ambiente corporativo.
+  </p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn"><span>[ ENTRAR EM CONTATO ]</span></a>
+    <a href="#projetos" class="btn btn-ghost"><span>[ VER PROJETOS ]</span></a>
+  </div>
+
+  <div class="terminal" style="max-width:560px; margin-top:56px;">
+    <div class="terminal-bar">
+      <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+      <span class="terminal-title">raone@kali:~$</span>
+    </div>
+    <div class="t-line"><span class="prompt">$ </span><span class="cmd">cat resumo_profissional.txt</span></div>
+    <div class="t-line"><span class="ok">[+]</span> Web Pentest | OWASP Top 10 | Burp Suite | SQLMap</div>
+    <div class="t-line"><span class="ok">[+]</span> OSINT | Maltego | theHarvester | Shodan</div>
+    <div class="t-line"><span class="ok">[+]</span> Red Team | Metasploit | Nmap | Gobuster | SET</div>
+    <div class="t-line"><span class="ok">[+]</span> Python scripting | Automação | Port scanner</div>
+    <div class="t-line"><span class="ok">[+]</span> Redes: TCP/IP, DNS, HTTP/HTTPS, Wireshark</div>
+    <div class="t-line"><span class="ok">[+]</span> Frameworks: OWASP Top 10 | MITRE ATT&amp;CK</div>
+    <div class="t-line" style="margin-top:6px;"><span class="prompt">$ </span><span class="t-cursor"></span></div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-label">01 // SOBRE</div>
+  <h2 class="section-title">Quem sou eu</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Sou <strong style="color:var(--green)">Raone Luiz Rodrigues Miranda</strong>, profissional em formação na área de Segurança Ofensiva, apaixonado por entender como sistemas falham — e como protegê-los antes que adversários reais os explorem.</p>
+      <p>Minha especialização é voltada para <strong style="color:#fff">Web Application Pentesting</strong>, com foco em vulnerabilidades do OWASP Top 10: SQL Injection, XSS, CSRF, IDOR e falhas de autenticação. Utilizo Burp Suite como principal ferramenta de interceptação e análise de requisições HTTP.</p>
+      <p>Tenho forte interesse em <strong style="color:#fff">OSINT e Reconhecimento Passivo</strong>, utilizando Maltego, theHarvester e Shodan para mapeamento de superfície de ataque, com geração de relatórios técnicos. Em paralelo, desenvolvo habilidades em <strong style="color:#fff">Red Team, Social Engineering e Python</strong> para automação de tarefas de pentest.</p>
+      <p>Cursando <strong style="color:#fff">Bacharelado em Segurança da Informação</strong> na FAM — Faculdade Américas (previsão 2027). Background em TI com experiência em suporte técnico, redes e identificação de vulnerabilidades.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">ÁREAS DE FOCO</div></div>
+      <div class="stat-card"><div class="stat-num">12+</div><div class="stat-label">FERRAMENTAS</div></div>
+      <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">CURSOS/CERTS</div></div>
+      <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">SEDE DE APRENDER</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div id="skills" class="full-bg">
+  <div class="section-wrap">
+    <div class="section-label">02 // ESPECIALIDADES</div>
+    <h2 class="section-title">Áreas de atuação</h2>
+  </div>
+  <div class="skills-grid section-wrap" style="max-width:1200px;">
+    <div class="skill-card">
+      <span class="skill-icon">[WEB]</span>
+      <div class="skill-name">WEB APP PENTEST</div>
+      <div class="skill-desc">Exploração prática de vulnerabilidades em DVWA e bWAPP: SQL Injection, XSS refletido/armazenado, IDOR, CSRF e upload inseguro. Interceptação e análise HTTP com Burp Suite seguindo metodologia OWASP Top 10.</div>
+      <div class="skill-tags"><span class="tag">OWASP TOP 10</span><span class="tag">BURP SUITE</span><span class="tag">SQLMAP</span><span class="tag">XSS/SQLi</span><span class="tag">DVWA</span></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">[RED]</span>
+      <div class="skill-name">RED TEAM & RECON</div>
+      <div class="skill-desc">Reconhecimento ativo e passivo, enumeração de serviços e diretórios, exploração com Metasploit Framework. Análise de tráfego com Wireshark. Simulação de adversários baseada em MITRE ATT&amp;CK.</div>
+      <div class="skill-tags"><span class="tag">METASPLOIT</span><span class="tag">NMAP</span><span class="tag">GOBUSTER</span><span class="tag">WIRESHARK</span><span class="tag">MITRE ATT&amp;CK</span></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">[SOC]</span>
+      <div class="skill-name">OSINT & SOC. ENG.</div>
+      <div class="skill-desc">Coleta estruturada de inteligência de fontes abertas: e-mails, subdomínios, IPs e serviços expostos. Social Engineering com SET. Relatórios técnicos de superfície de ataque com Maltego, theHarvester e Shodan.</div>
+      <div class="skill-tags"><span class="tag">MALTEGO</span><span class="tag">THEHARVESTER</span><span class="tag">SHODAN</span><span class="tag">SET</span><span class="tag">OSINT FRAMEWORK</span></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">[PY]</span>
+      <div class="skill-name">PYTHON & SCRIPTING</div>
+      <div class="skill-desc">Desenvolvimento de ferramentas próprias de pentest: port scanner com sockets TCP, identificação de serviços, coleta de banners e automação de reconhecimento ativo. Scripts em JavaScript, HTML5 e CSS3.</div>
+      <div class="skill-tags"><span class="tag">PYTHON</span><span class="tag">SOCKETS</span><span class="tag">AUTOMAÇÃO</span><span class="tag">JS</span></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">[NET]</span>
+      <div class="skill-name">REDES & PROTOCOLOS</div>
+      <div class="skill-desc">TCP/IP, DNS, HTTP/HTTPS, análise de tráfego de rede, configuração de firewall e mitigação de DDoS. Base sólida para pentests de infraestrutura e análise de comunicação em aplicações.</div>
+      <div class="skill-tags"><span class="tag">TCP/IP</span><span class="tag">DNS</span><span class="tag">HTTP/S</span><span class="tag">FIREWALL</span><span class="tag">CCNA</span></div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-icon">[OS]</span>
+      <div class="skill-name">SISTEMAS OPERACIONAIS</div>
+      <div class="skill-desc">Proficiência em Linux (Kali, Ubuntu) e Windows. Configuração e gerenciamento de ambientes virtualizados para laboratórios de pentest com VMs. Automação via shell e ferramentas de linha de comando.</div>
+      <div class="skill-tags"><span class="tag">KALI LINUX</span><span class="tag">UBUNTU</span><span class="tag">WINDOWS</span><span class="tag">VIRTUALIZAÇÃO</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ARSENAL -->
+<section id="ferramentas">
+  <div class="section-label">03 // ARSENAL</div>
+  <h2 class="section-title">Ferramentas & Tecnologias</h2>
+  <div class="tools-grid">
+    <div class="tool-item"><div class="tool-name">KALI LINUX</div><div class="tool-use">OS principal de pentest</div><div class="tool-bar"><div class="tool-bar-fill" style="width:90%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">NMAP</div><div class="tool-use">Varredura e enumeração</div><div class="tool-bar"><div class="tool-bar-fill" style="width:82%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">BURP SUITE</div><div class="tool-use">Web app analysis</div><div class="tool-bar"><div class="tool-bar-fill" style="width:78%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">METASPLOIT</div><div class="tool-use">Exploitation framework</div><div class="tool-bar"><div class="tool-bar-fill" style="width:72%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">SQLMAP</div><div class="tool-use">SQL Injection auto</div><div class="tool-bar"><div class="tool-bar-fill" style="width:75%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">MALTEGO</div><div class="tool-use">OSINT e mapeamento</div><div class="tool-bar"><div class="tool-bar-fill" style="width:70%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">THEHARVESTER</div><div class="tool-use">Recon de domínios</div><div class="tool-bar"><div class="tool-bar-fill" style="width:74%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">GOBUSTER</div><div class="tool-use">Dir/DNS brute force</div><div class="tool-bar"><div class="tool-bar-fill" style="width:68%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">SHODAN</div><div class="tool-use">Busca de dispositivos</div><div class="tool-bar"><div class="tool-bar-fill" style="width:66%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">SET</div><div class="tool-use">Social Engineering</div><div class="tool-bar"><div class="tool-bar-fill" style="width:62%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">WIRESHARK</div><div class="tool-use">Análise de tráfego</div><div class="tool-bar"><div class="tool-bar-fill" style="width:70%"></div></div></div>
+    <div class="tool-item"><div class="tool-name">PYTHON</div><div class="tool-use">Scripting e automação</div><div class="tool-bar"><div class="tool-bar-fill" style="width:76%"></div></div></div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="section-label">04 // PROJETOS</div>
+  <h2 class="section-title">Projetos em destaque</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-num">PROJECT_01 // PYTHON · AUTOMAÇÃO</div>
+      <div class="project-title">PORT SCANNER EM PYTHON</div>
+      <div class="project-desc">Script desenvolvido com sockets Python para varredura de portas TCP. Identifica serviços ativos, coleta banners e detecta sistema operacional. Foco em automação de reconhecimento ativo em pentests, simulando funcionalidades do Nmap com código próprio.</div>
+      <div class="project-tags"><span class="tag">PYTHON</span><span class="tag">SOCKETS</span><span class="tag">TCP</span><span class="tag">BANNER GRABBING</span><span class="tag">RECON</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">PROJECT_02 // WEB PENTEST · OWASP</div>
+      <div class="project-title">LAB WEB PENTEST — DVWA / bWAPP</div>
+      <div class="project-desc">Ambiente virtualizado configurado para exploração prática do OWASP Top 10: SQL Injection, XSS refletido e armazenado, IDOR, CSRF e upload inseguro. Interceptação e análise de requisições HTTP com Burp Suite para documentação das vulnerabilidades encontradas.</div>
+      <div class="project-tags"><span class="tag">BURP SUITE</span><span class="tag">DVWA</span><span class="tag">bWAPP</span><span class="tag">OWASP</span><span class="tag">XSS</span><span class="tag">SQLi</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">PROJECT_03 // OSINT · RECONHECIMENTO</div>
+      <div class="project-title">RECONHECIMENTO OSINT PASSIVO</div>
+      <div class="project-desc">Coleta estruturada de informações públicas sobre domínios-alvo utilizando theHarvester, Maltego e Shodan. Produção de relatório técnico completo com mapeamento da superfície de ataque: e-mails, subdomínios, IPs expostos e serviços identificados.</div>
+      <div class="project-tags"><span class="tag">MALTEGO</span><span class="tag">THEHARVESTER</span><span class="tag">SHODAN</span><span class="tag">OSINT</span><span class="tag">RELATÓRIO</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">PROJECT_04 // WEB · PORTFÓLIO</div>
+      <div class="project-title">PORTFÓLIO PESSOAL DE SEGURANÇA</div>
+      <div class="project-desc">Desenvolvimento de site responsivo (HTML/CSS/JS) hospedado no GitHub Pages para apresentação de projetos técnicos, certificações e write-ups de CTF. Documentação pública e evolução contínua como profissional de segurança ofensiva.</div>
+      <div class="project-tags"><span class="tag">HTML5/CSS3</span><span class="tag">JAVASCRIPT</span><span class="tag">GITHUB PAGES</span><span class="tag">CTF WRITE-UPS</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section id="exp">
+  <div class="section-label">05 // EXPERIÊNCIA</div>
+  <h2 class="section-title">Experiência profissional</h2>
+  <div class="exp-item">
+    <div class="exp-meta">JUN 2022 — DEZ 2022 · CASA GRANDE, MG</div>
+    <div class="exp-title">Técnico em TI — Suporte e CAD</div>
+    <div class="exp-company">EMPRESA PRIVADA</div>
+    <ul class="exp-list">
+      <li>Suporte técnico a sistemas computacionais: instalação de softwares, manutenção preventiva e corretiva de hardware e software.</li>
+      <li>Resolução de incidentes e documentação técnica de processos e soluções para equipe interna.</li>
+      <li>Identificação de vulnerabilidades básicas em sistemas durante rotinas de suporte técnico.</li>
+      <li>Criação e modificação de projetos via software CAD; organização e análise de dados em Excel.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FORMAÇÃO -->
+<section id="formacao">
+  <div class="section-label">06 // FORMAÇÃO ACADÊMICA</div>
+  <h2 class="section-title">Educação</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-meta">CURSANDO — PREVISÃO 2027</div>
+      <div class="edu-title">Bacharelado em Segurança da Informação</div>
+      <div class="edu-inst">FAM — Faculdade Américas</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-meta">CONCLUÍDO — 2021</div>
+      <div class="edu-title">Técnico em Mecatrônica</div>
+      <div class="edu-inst">Nubbi</div>
+    </div>
+  </div>
+
+  <h2 class="section-title" style="margin-top:64px;">Certificações & Cursos</h2>
+  <div class="cert-grid">
+    <div class="cert-item">
+      <div class="cert-dot wip"></div>
+      <div><div class="cert-text">Cisco CCNA</div><div class="cert-source">Cisco Networking Academy</div></div>
+      <span class="cert-badge wip">EM ANDAMENTO</span>
+    </div>
+    <div class="cert-item">
+      <div class="cert-dot"></div>
+      <div><div class="cert-text">Network Defense</div><div class="cert-source">Cisco Networking Academy</div></div>
+      <span class="cert-badge done">CONCLUÍDO</span>
+    </div>
+    <div class="cert-item">
+      <div class="cert-dot"></div>
+      <div><div class="cert-text">Introduction to Cybersecurity</div><div class="cert-source">Cisco Networking Academy</div></div>
+      <span class="cert-badge done">CONCLUÍDO</span>
+    </div>
+    <div class="cert-item">
+      <div class="cert-dot"></div>
+      <div><div class="cert-text">Introdução ao Hacking e Pentest 2.0</div><div class="cert-source">Solyd Offensive Security</div></div>
+      <span class="cert-badge done">CONCLUÍDO</span>
+    </div>
+    <div class="cert-item">
+      <div class="cert-dot"></div>
+      <div><div class="cert-text">Web Application Security</div><div class="cert-source">Udemy</div></div>
+      <span class="cert-badge done">CONCLUÍDO</span>
+    </div>
+    <div class="cert-item">
+      <div class="cert-dot"></div>
+      <div><div class="cert-text">Redes de Computadores</div><div class="cert-source">Udemy</div></div>
+      <span class="cert-badge done">CONCLUÍDO</span>
+    </div>
+    <div class="cert-item">
+      <div class="cert-dot"></div>
+      <div><div class="cert-text">Python Básico — Lógica de Programação</div><div class="cert-source">Curso em Vídeo</div></div>
+      <span class="cert-badge done">CONCLUÍDO</span>
+    </div>
+  </div>
+
+  <h2 class="section-title" style="margin-top:64px;">Plataformas de prática</h2>
+  <div class="platforms">
+    <div class="platform-pill">TRYHACKME</div>
+    <div class="platform-pill">HACK THE BOX</div>
+    <div class="platform-pill">PORTSWIGGER WEB ACADEMY</div>
+    <div class="platform-pill">CISCO NETACAD</div>
+  </div>
+
+  <h2 class="section-title" style="margin-top:64px;">Idiomas</h2>
+  <div class="lang-grid">
+    <div class="lang-card"><div class="lang-name">PORTUGUÊS</div><div class="lang-level">NATIVO</div></div>
+    <div class="lang-card"><div class="lang-name">INGLÊS</div><div class="lang-level">LEITURA TÉCNICA & PROFISSIONAL</div></div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-label">07 // ROADMAP</div>
+  <h2 class="section-title">Trajetória & próximos passos</h2>
+  <div class="roadmap">
+    <div class="roadmap-item">
+      <div class="roadmap-dot active"></div>
+      <div class="roadmap-meta">2024 — PRESENTE</div>
+      <div class="roadmap-title">Labs, OSINT, Web Pentest e Python</div>
+      <div class="roadmap-desc">Configuração de laboratório com DVWA/bWAPP, port scanner em Python, reconhecimento OSINT com Maltego/Shodan, e prática em TryHackMe e PortSwigger Web Security Academy.</div>
+      <span class="roadmap-badge em-curso">EM CURSO</span>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot active"></div>
+      <div class="roadmap-meta">2025</div>
+      <div class="roadmap-title">Cisco CCNA — Certificação em Redes</div>
+      <div class="roadmap-desc">Conclusão da certificação CCNA para solidificar conhecimentos de infraestrutura de redes como base para pentests avançados.</div>
+      <span class="roadmap-badge em-curso">EM ANDAMENTO</span>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot future"></div>
+      <div class="roadmap-meta">2025</div>
+      <div class="roadmap-title">eJPT — eLearnSecurity Junior Pentester</div>
+      <div class="roadmap-desc">Primeiro marco formal de validação. Produção de write-ups públicos no GitHub e participação ativa em HTB e TryHackMe.</div>
+      <span class="roadmap-badge planejado">PLANEJADO</span>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot future"></div>
+      <div class="roadmap-meta">2025–2026</div>
+      <div class="roadmap-title">Bug Bounty (HackerOne / Bugcrowd) & eCPPT</div>
+      <div class="roadmap-desc">Participação ativa em programas de bug bounty e progressão para eCPPT, aprofundando habilidades em exploração avançada e post-exploitation.</div>
+      <span class="roadmap-badge planejado">PLANEJADO</span>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-dot future"></div>
+      <div class="roadmap-meta">2026–2027</div>
+      <div class="roadmap-title">OSCP — Offensive Security Certified Professional</div>
+      <div class="roadmap-desc">Meta final: OSCP e atuação consolidada como pentester profissional, concomitante à conclusão do Bacharelado em Segurança da Informação.</div>
+      <span class="roadmap-badge planejado">PLANEJADO</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<div id="contact" class="full-bg">
+  <div class="section-wrap">
+    <div class="section-label">08 // CONTATO</div>
+    <h2 class="section-title">Vamos conversar</h2>
+    <p style="color:var(--text-dim); font-size:14px; font-weight:300; max-width:480px;">Aberto a oportunidades CLT, freelance, bug bounty e colaborações na área de segurança ofensiva.</p>
+    <div class="contact-grid">
+      <a href="https://github.com/raone-miranda" target="_blank" class="contact-card">
+        <div class="contact-icon">[GH]</div>
+        <div><div class="contact-label">GITHUB</div><div class="contact-value">github.com/raone-miranda</div></div>
+      </a>
+      <a href="https://linkedin.com/in/raone-miranda" target="_blank" class="contact-card">
+        <div class="contact-icon">[IN]</div>
+        <div><div class="contact-label">LINKEDIN</div><div class="contact-value">linkedin.com/in/raone-miranda</div></div>
+      </a>
+    </div>
+    <div class="terminal" style="margin-top:48px;">
+      <div class="terminal-bar">
+        <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+        <span class="terminal-title">raone@kali:~/contact$</span>
+      </div>
+      <div class="t-line"><span class="prompt">$ </span><span class="cmd">cat status.txt</span></div>
+      <div class="t-line"><span class="ok">[+]</span> Formação: Bacharelado Seg. da Informação — FAM (cursando)</div>
+      <div class="t-line"><span class="ok">[+]</span> Disponível para: CLT, freelance, bug bounty, colaborações</div>
+      <div class="t-line"><span class="ok">[+]</span> Foco: Web Pentest | OSINT | Red Team | Python</div>
+      <div class="t-line"><span class="ok">[+]</span> Status: <span style="color:#00ff41; font-weight:bold;">OPEN TO WORK</span></div>
+      <div class="t-line" style="margin-top:6px;"><span class="warn">[!]</span> Todos os testes realizados com autorização expressa. Hacking ético.</div>
+      <div class="t-line"><span class="prompt">$ </span><span class="t-cursor"></span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-copy">© 2025 RAONE LUIZ RODRIGUES MIRANDA // ALL RIGHTS RESERVED</div>
+  <div class="footer-sig">BUILT WITH <span>[ ETHICS & CODE ]</span></div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.skill-card, .tool-item, .stat-card, .roadmap-item, .contact-card, .project-card, .cert-item, .exp-item, .edu-card, .lang-card, .platform-pill').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease, border-color 0.3s, background 0.3s';
+    observer.observe(el);
+  });
+
+  const logo = document.querySelector('.nav-logo');
+  const original = logo.textContent;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#@!';
+  logo.addEventListener('mouseenter', () => {
+    let count = 0;
+    const iv = setInterval(() => {
+      logo.textContent = original.split('').map((c, i) => {
+        if (c === '_') return '_';
+        if (count > i * 1.5) return c;
+        return chars[Math.floor(Math.random() * chars.length)];
+      }).join('');
+      count++;
+      if (count > original.length * 2) { clearInterval(iv); logo.textContent = original; }
+    }, 40);
+  });
+</script>
 </body>
 </html>
